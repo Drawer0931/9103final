@@ -1,4 +1,4 @@
-let circles = [];
+let circleManager;
 let canvasScale = 1;
 
 function setup() {
@@ -6,15 +6,19 @@ function setup() {
 
   canvasScale = min(width / 1280, height / 720);
 
-  initialiseCircles(1);
+  // Create one shared manager.
+  circleManager = new CircleManager();
+
+
+  initialiseCircles(1, circleManager);
 }
 
 function draw() {
   background(16, 18, 27);
 
-  updateNoise();
+  // Update the shared circles.
+  updateNoise(circleManager);
 
-  for (let i = 0; i < circles.length; i++) {
-    circles[i].display();
-  }
+  // Draw the shared circles.
+  circleManager.displayCircles();
 }

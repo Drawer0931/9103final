@@ -1,33 +1,33 @@
-// Based on the seed and shared rules, generate the initial composition
-function initialiseCircles(seed) {
+// Generate the initial composition using the shared manager.
+function initialiseCircles(seed, manager) {
   randomSeed(seed);
   noiseSeed(seed);
 
-  circles = [];
+  
+  manager.circles = [];
 
-  // Based on the size rules in circle.js, create a list of radii to be assigned
+
   let sizes = [];
 
-  for (let i = 0; i < sizeRules.length; i++) {
-    for (let j = 0; j < sizeRules[i].count; j++) {
-      sizes.push(sizeRules[i].radius);
+  for (let i = 0; i < manager.sizeRules.length; i++) {
+    for (let j = 0; j < manager.sizeRules[i].count; j++) {
+      sizes.push(manager.sizeRules[i].radius);
     }
   }
 
   let totalCount = sizes.length;
 
   for (let i = 0; i < totalCount; i++) {
-    // Randomly select a radius and scale it according to the canvas size
+    // Select a radius and apply the canvas scale.
     let sizeIndex = floor(random(sizes.length));
     let radius = sizes[sizeIndex] * canvasScale;
 
-    // Remove the selected item to ensure fixed counts for each size
+    // Remove the selected item to keep each size count fixed.
     sizes.splice(sizeIndex, 1);
 
-    // Define margins to prevent circles from being too close to the edges of the canva
+    // Leave space for the circle and its movement.
     let margin = radius + 60 * canvasScale;
 
-    // Using window width for horizontal spread, and original scaled range for vertical spread
     let spreadX = width * 0.35;
     let spreadY = 220 * canvasScale;
 
@@ -37,14 +37,14 @@ function initialiseCircles(seed) {
     let top = max(margin, height / 2 - spreadY);
     let bottom = min(height - margin, height / 2 + spreadY);
 
-    // Randomly generate position and opacity
+    // Generate position and opacity.
     let x = random(left, right);
     let y = random(top, bottom);
 
     let opacity = random(100, 190);
 
-    // Select a color from the shared palette in circle.js
-    let chosenColour = random(palette);
+    // Select a colour from the manager's palette.
+    let chosenColour = random(manager.palette);
 
     let newCircle = new Circle(
       x,
@@ -56,23 +56,23 @@ function initialiseCircles(seed) {
       opacity
     );
 
-    // Set initial noise offsets for smooth movement
+    // Set independent noise starting points.
     newCircle.noiseX = random(1000);
     newCircle.noiseY = random(1000);
 
-    circles.push(newCircle);
+    // Add the circle to the shared collection.
+    manager.circles.push(newCircle);
   }
 }
 
-// Update the position of each circle based on Perlin noise to create a drifting effect
-function updateNoise() {
-  for (let i = 0; i < circles.length; i++) {
-    let currentCircle = circles[i];
+// Update positions using Perlin noise.
+function updateNoise(manager) {
+  for (let i = 0; i < manager.circles.length; i++) {
+    let currentCircle = manager.circles[i];
 
     let valueX = noise(currentCircle.noiseX);
     let valueY = noise(currentCircle.noiseY);
 
-    // Drift range is scaled based on the canva size to maintain visual consistency across different screen sizes
     let driftRange = 60 * canvasScale;
 
     let drifX = map(valueX, 0, 1, -driftRange, driftRange);
@@ -81,7 +81,7 @@ function updateNoise() {
     currentCircle.x = currentCircle.baseX + drifX;
     currentCircle.y = currentCircle.baseY + drifY;
 
-    // Slowly advance the noise sampling positions
+    // Slowly advance the noise sampling positions.
     currentCircle.noiseX = currentCircle.noiseX + 0.005;
     currentCircle.noiseY = currentCircle.noiseY + 0.005;
   }
