@@ -16,6 +16,9 @@ function setup() {
 function draw() {
   background(16, 18, 27);
 
+  // Handle mouse and keyboard input.
+updateInput(circleManager);
+
   // Update the shared circles.
   updateNoise(circleManager);
 
