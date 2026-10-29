@@ -53,7 +53,9 @@ function initialiseCircles(seed, manager) {
       chosenColour[0],
       chosenColour[1],
       chosenColour[2],
-      opacity
+      opacity,
+      0.1,
+      40
     );
 
     // Set independent noise starting points.

@@ -29,8 +29,16 @@ class CircleManager {
   }
 
 
-  displayCircles() {
+  displayCircles(volume) {
+    let haloBrightness = map(volume, 0, 0.3, 0.1, 1, true);
     for (let i = 0; i < this.circles.length; i++) {
+      if (volume > 0){
+        this.circles[i].ifPlaying = true;
+      }
+      else{
+        this.circles[i].ifPlaying = false;
+      }
+      this.circles[i].haloBrightness = haloBrightness;
       this.circles[i].display();
     }
   }

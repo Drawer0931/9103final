@@ -13,7 +13,8 @@ let audioAnalyzer;
 
 // When playing, continuously updating
 // When not playing, stop updating
-let ifPlaying;
+//let ifPlaying;
+let volume;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -70,6 +71,7 @@ async function handleFile(file){
     }
     song = await loadSound(file);
     console.log("upload succeed");
+    audioAnalyzer = new AudioAnalyzer(song);
   }
 }
 
@@ -78,11 +80,12 @@ function playPause(){
   if (song){
     if (song.isPlaying()){
       song.pause();
-      ifPlaying = false;
+      audioAnalyzer.ifPlaying = false;
+      
     }
     else{
       song.loop();
-      ifPlaying = true;
+      audioAnalyzer.ifPlaying = true;
     }
   }
 }
@@ -94,5 +97,13 @@ function draw() {
   updateNoise(circleManager);
 
   // Draw the shared circles.
-  circleManager.displayCircles();
+  if (audioAnalyzer){
+    //console.log("have audio");
+    volume = audioAnalyzer.analyzeVolume();
+    circleManager.displayCircles(volume);
+  }
+  else{
+    //console.log("no audio");
+    circleManager.displayCircles(0);
+  }
 }
