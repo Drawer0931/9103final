@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time-Based Mechanic Preview</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Standalone preview developed with ChatGPT/Codex assistance. -->
+    <style>
+      #time-preview-status {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        max-width: calc(100vw - 48px);
+        padding: 9px 12px;
+        border: 1px solid #ffffff26;
+        border-radius: 8px;
+        background: #10121be6;
+        color: #d4d7e2;
+        font: 12px/1.6 system-ui, sans-serif;
+        pointer-events: none;
+        z-index: 1;
+      }
+      #time-preview-status .phases {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 12px;
+      }
+      #time-preview-status [aria-current="step"] {
+        color: #ffe09d;
+        font-weight: 700;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+    </style>
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+  </head>
+  <body>
+    <!-- This small corner indicator never captures the artwork's mouse input. -->
+    <aside id="time-preview-status" aria-label="Time mechanic status">
+      <div class="phases">
+        <span data-phase="Awakening">Awakening</span>
+        <span data-phase="Expansion">Expansion</span>
+        <span data-phase="Recovery">Recovery</span>
+      </div>
+      <div id="time-preview-intensity">Preparing preview...</div>
+    </aside>
+    <!-- Keep dependencies ordered; sketch.js is intentionally not loaded. -->
+    <script src="circle.js"></script>
+    <script src="circle_manager.js"></script>
+    <script src="noise.js"></script>
+    <script src="input-mechanic.js"></script>
+    <script src="time-mechanic.js"></script>
+    <script src="time-preview.js"></script>
+  </body>
+</html>

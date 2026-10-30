@@ -6,10 +6,10 @@ const timeMechanicStates = new WeakMap();
 const timeMechanicBaselines = new WeakMap();
 
 // Adaptations for 30-circle integration, NOT previously tested Experiment E values:
-// proportional contraction reaches 15% at intensity 1.5; opacity uses the
+// proportional contraction reaches 30% at intensity 1.5; opacity uses the
 // prototype's 60/170 amplitude as a multiplier of each circle's saved opacity.
 const TIME_MECHANIC_DEFAULTS = Object.freeze({
-  maximumContraction: 0.15,
+  maximumContraction: 0.30,
   relativeOpacityAmplitude: 60 / 170
 });
 
@@ -69,8 +69,8 @@ function initialiseTimeMechanic(manager, options = {}, nowMs = timeMechanicNow()
       throw new RangeError(key + " must be a number between 0 and 1.");
     }
   }
-  if (settings.maximumContraction > 0.15) {
-    throw new RangeError("maximumContraction cannot exceed the first-stage 15% limit.");
+  if (settings.maximumContraction > 0.30) {
+    throw new RangeError("maximumContraction cannot exceed the 30% preview experiment limit.");
   }
   if (!Number.isFinite(nowMs)) {
     throw new TypeError("Time mechanic timestamp must be finite milliseconds.");
