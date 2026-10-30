@@ -48,3 +48,17 @@ function pushCircles(manager) {
     }
   }
 }
+
+// Press a number key to generate a composition with that seed.
+function keyPressed() {
+  // Only respond to number keys from 0 to 9.
+  if (key >= "0" && key <= "9") {
+    // Convert the key text into a number.
+    let seed = Number(key);
+
+    // Regenerate the composition using the selected seed.
+    initialiseCircles(seed, circleManager);
+
+    return false;
+  }
+}

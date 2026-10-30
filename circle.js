@@ -42,6 +42,12 @@ class Circle {
 
     // Opacity
     this.opacity = opacity;
+
+    // Size category and lifecycle state.
+  this.sizeLevel = 0;
+  this.lifeAlpha = 1;
+  this.lifeState = "alive";
+  this.stateStartedAt = millis();
   }
 
   display() {
@@ -49,7 +55,12 @@ class Circle {
 
     noStroke();
 
-    fill(this.red, this.green, this.blue, this.opacity);
+    fill(
+    this.red,
+    this.green,
+    this.blue,
+    this.opacity * this.lifeAlpha
+);
 
     circle(this.x, this.y, this.baseRadius * 2);
 

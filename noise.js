@@ -69,6 +69,7 @@ function initialiseCircles(seed, manager) {
       opacity
     );
 
+    newCircle.sizeLevel = sizeRule.level;
     // Assign the colour speed for this size category.
     newCircle.colourSpeed = sizeRule.colourSpeed;
     newCircle.colourRange = sizeRule.colourRange;
@@ -238,17 +239,25 @@ function drawCircleBackground(manager) {
     );
     // --AI used end
 
-
+    // --AI used
     for (let i = 0; i < manager.circles.length; i++) {
       let c = manager.circles[i];
 
-      let backgroundRadius = c.baseRadius + padding;
+     // Skip the background of a completely invisible circle.
+    if (c.lifeAlpha <= 0) {
+      continue;
+      }
 
-      circle(
-        c.x,
-        c.y,
-        backgroundRadius * 2
+    // Reduce this circle's background area as it fades out.
+    let backgroundRadius =
+      (c.baseRadius + padding) * c.lifeAlpha;
+
+    circle(
+      c.x,
+      c.y,
+      backgroundRadius * 2
       );
+    // --AI used end
     }
   }
 
@@ -256,4 +265,50 @@ function drawCircleBackground(manager) {
 
   // Slowly advance the background noise.
   regionNoiseTime = regionNoiseTime + 0.008;
+}
+
+// Generate one replacement without resetting the whole composition.
+function createReplacementCircle(oldCircle, sizeRule) {
+  let radius = sizeRule.radius * canvasScale;
+
+  // Use the same position limits as the initial composition.
+  let margin = radius + 60 * canvasScale;
+  let spreadX = width * 0.35;
+  let spreadY = 220 * canvasScale;
+
+  let left = max(margin, width / 2 - spreadX);
+  let right = min(width - margin, width / 2 + spreadX);
+  let top = max(margin, height / 2 - spreadY);
+  let bottom = min(height - margin, height / 2 + spreadY);
+
+  let x = random(left, right);
+  let y = random(top, bottom);
+
+  // Keep the original base colour and opacity.
+  let newCircle = new Circle(
+    x, y, radius,
+    oldCircle.baseRed,
+    oldCircle.baseGreen,
+    oldCircle.baseBlue,
+    oldCircle.opacity
+  );
+
+  newCircle.sizeLevel = sizeRule.level;
+  newCircle.colourSpeed = sizeRule.colourSpeed;
+  newCircle.colourRange = sizeRule.colourRange;
+  newCircle.driftSpeed = sizeRule.driftSpeed;
+
+  // Give the replacement its own movement and colour noise.
+  newCircle.noiseX = random(1000);
+  newCircle.noiseY = random(1000);
+
+  newCircle.noiseRed = random(1000);
+  newCircle.noiseGreen = random(1000, 2000);
+  newCircle.noiseBlue = random(2000, 3000);
+
+  // The time mechanic will gradually increase lifeAlpha to 1.
+  newCircle.lifeAlpha = 0;
+  newCircle.lifeState = "fadingIn";
+
+  return newCircle;
 }
