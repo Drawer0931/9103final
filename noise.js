@@ -205,13 +205,15 @@ function drawCircleBackground(manager) {
   // Keep the background colour strength low and constant.
   let shade = 0.6;
 
-  let layers = 40;
+  let layers = 20;
 
   push();
   blendMode(BLEND);
   ellipseMode(CENTER);
   noStroke();
 
+
+  //--AI used
   // Draw from the outermost layer toward the circles.
   for (let layer = layers; layer >= 0; layer--) {
     let padding = map(
@@ -234,6 +236,8 @@ function drawCircleBackground(manager) {
       18 + 8 * strength,
       27 + 12 * strength
     );
+    // --AI used end
+
 
     for (let i = 0; i < manager.circles.length; i++) {
       let c = manager.circles[i];

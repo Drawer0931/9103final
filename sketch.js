@@ -4,6 +4,9 @@ let canvasScale = 1;
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
+  pixelDensity(1);   //AI used
+  frameRate(60);     // AI used end
+
   canvasScale = min(width / 1280, height / 720);
 
   // Create one shared manager.
@@ -25,6 +28,17 @@ function draw() {
   // Draw the background around the circles.
   drawCircleBackground(circleManager);
 
-  // Draw the circles.
   circleManager.displayCircles();
+
+  // AI used
+  // Show the current frame rate.
+  push();
+  noStroke();
+  fill(255);
+  textSize(14);
+  text("FPS: " + round(frameRate()), 16, 24);
+
+  // End of AI used
+  pop();
+
 }
