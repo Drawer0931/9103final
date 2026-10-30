@@ -35,7 +35,23 @@ class Circle {
 
     noStroke();
 
-    
+    if (this.ifPlaying){
+      drawingContext.filter = "blur(20px)";
+      for (let i = 2; i > 0; i--) {
+        let haloRadius = this.baseRadius + 20 * i;
+        let alpha = this.haloBrightness * 20 / i;
+        fill(
+          this.red,
+          this.green,
+          this.blue,
+          alpha
+        );
+        circle(this.x, this.y, haloRadius * 2);
+      }
+      drawingContext.filter = "none";
+    }
+
+    /*
     if (this.ifPlaying){
       drawingContext.filter = "blur(15px)";
       for (let i = 5; i > 0; i--) {
@@ -51,7 +67,7 @@ class Circle {
       }
       drawingContext.filter = "none";
     }
-    
+    */
 
     /*
     let c = color(this.red, this.green, this.blue);
