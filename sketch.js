@@ -16,12 +16,15 @@ function setup() {
 function draw() {
   background(16, 18, 27);
 
-  // Handle mouse and keyboard input.
-updateInput(circleManager);
+  // Handle mouse input first.
+  updateInput(circleManager);
 
-  // Update the shared circles.
+  // Update circle movement and colours.
   updateNoise(circleManager);
 
-  // Draw the shared circles.
+  // Draw the background around the circles.
+  drawCircleBackground(circleManager);
+
+  // Draw the circles.
   circleManager.displayCircles();
 }
