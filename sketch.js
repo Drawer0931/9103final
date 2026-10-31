@@ -22,9 +22,6 @@ function draw() {
   // Handle mouse input first.
   updateInput(circleManager);
 
-  // Update lifetimes, fading and replacement.
-  updateTime(circleManager);
-
   // Update circle movement and colours.
   updateNoise(circleManager);
 
