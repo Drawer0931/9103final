@@ -100,7 +100,7 @@ class Circle {
       `rgba(${red(c)}, ${green(c)}, ${blue(c)}, ${this.haloBrightness})`;
     */
     
-    fill(this.red, this.green, this.blue, this.opacity);
+    //fill(this.red, this.green, this.blue, this.opacity);
     fill(
     this.red,
     this.green,
