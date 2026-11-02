@@ -39,7 +39,7 @@ class Circle {
       drawingContext.filter = "blur(20px)";
       for (let i = 2; i > 0; i--) {
         let haloRadius = this.baseRadius + 20 * i;
-        let alpha = this.haloBrightness * 20 / i;
+        let alpha = this.haloBrightness * 32 / i;
         fill(
           this.red,
           this.green,
