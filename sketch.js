@@ -102,6 +102,8 @@ function draw() {
   // Update circle movement and colours.
   updateNoise(circleManager);
 
+  drawCircleBackground(circleManager);
+
   // Draw the shared circles.
   if (audioAnalyzer){
     //console.log("have audio");
@@ -113,9 +115,6 @@ function draw() {
     circleManager.displayCircles(0);
   }
   // Draw the background around the circles.
-  drawCircleBackground(circleManager);
-
-  circleManager.displayCircles();
 
   // AI used
   // Show the current frame rate.

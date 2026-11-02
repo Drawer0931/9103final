@@ -55,28 +55,27 @@ this.sizeRules = [
   }
 
 
+
+  // AI used
+  // Maximum number of circles changing in one size category.
+  getMaxChanging(level) {
+    let count = this.sizeRules[level].count;
+    return max(1, floor(count / 2));
+  }
+
+  // Replace one circle after it has completely faded out.
+  replaceCircle(index) {
+    let oldCircle = this.circles[index];
+    let sizeRule = this.sizeRules[oldCircle.sizeLevel];
+
+    let newCircle = createReplacementCircle(oldCircle, sizeRule);
+    this.circles[index] = newCircle;
+
+    return newCircle;
+  }
+
   displayCircles(volume) {
     let haloBrightness = map(volume, 0, 0.3, 0.1, 1, true);
-// AI used
-// Maximum number of circles changing in one size category.
-getMaxChanging(level) {
-  let count = this.sizeRules[level].count;
-  return max(1, floor(count / 2));
-}
-
-// Replace one circle after it has completely faded out.
-replaceCircle(index) {
-  let oldCircle = this.circles[index];
-  let sizeRule = this.sizeRules[oldCircle.sizeLevel];
-
-  let newCircle = createReplacementCircle(oldCircle, sizeRule);
-  this.circles[index] = newCircle;
-
-  return newCircle;
-}
-
-
-  displayCircles() {
     for (let i = 0; i < this.circles.length; i++) {
       if (volume > 0){
         this.circles[i].ifPlaying = true;
