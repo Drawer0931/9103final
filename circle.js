@@ -1,6 +1,6 @@
 // Each circle stores its own properties.
 class Circle {
-  constructor(x, y, radius, red, green, blue, opacity) {
+  constructor(x, y, radius, red, green, blue, opacity, haloBrightness, haloSize) {
     // Current position
     this.x = x;
     this.y = y;
@@ -43,6 +43,10 @@ class Circle {
     // Opacity
     this.opacity = opacity;
 
+    this.haloBrightness = haloBrightness;
+    this.haloSize = haloSize;
+
+    this.ifPlaying = false;
     // Size category and lifecycle state.
   this.sizeLevel = 0;
   this.lifeAlpha = 1;
@@ -55,6 +59,48 @@ class Circle {
 
     noStroke();
 
+    if (this.ifPlaying){
+      drawingContext.filter = "blur(20px)";
+      for (let i = 2; i > 0; i--) {
+        let haloRadius = this.baseRadius + 20 * i;
+        let alpha = this.haloBrightness * 32 / i;
+        fill(
+          this.red,
+          this.green,
+          this.blue,
+          alpha
+        );
+        circle(this.x, this.y, haloRadius * 2);
+      }
+      drawingContext.filter = "none";
+    }
+
+    /*
+    if (this.ifPlaying){
+      drawingContext.filter = "blur(15px)";
+      for (let i = 5; i > 0; i--) {
+        let haloRadius = this.baseRadius + i * 8;
+        let alpha = this.haloBrightness * 20 / i;
+        fill(
+          this.red,
+          this.green,
+          this.blue,
+          alpha
+        );
+        circle(this.x, this.y, haloRadius * 2);
+      }
+      drawingContext.filter = "none";
+    }
+    */
+
+    /*
+    let c = color(this.red, this.green, this.blue);
+    drawingContext.shadowBlur = 100;
+    drawingContext.shadowColor =
+      `rgba(${red(c)}, ${green(c)}, ${blue(c)}, ${this.haloBrightness})`;
+    */
+    
+    fill(this.red, this.green, this.blue, this.opacity);
     fill(
     this.red,
     this.green,
