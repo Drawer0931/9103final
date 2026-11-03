@@ -108,7 +108,12 @@ function draw() {
   if (audioAnalyzer){
     //console.log("have audio");
     volume = audioAnalyzer.analyzeVolume();
-    circleManager.displayCircles(volume);
+    audioAnalyzer.analyzeFrequencyBand();
+    // console.log(audioAnalyzer.lowEnergy + "," + audioAnalyzer.highEnergy);
+    if (audioAnalyzer.peakDetect.isDetected) {
+      console.log("Beat detected!");
+    }
+    circleManager.displayCircles(volume, audioAnalyzer.lowEnergy, audioAnalyzer.highEnergy);
   }
   else{
     //console.log("no audio");

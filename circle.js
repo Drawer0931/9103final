@@ -52,6 +52,11 @@ class Circle {
   this.lifeAlpha = 1;
   this.lifeState = "alive";
   this.stateStartedAt = millis();
+
+
+    this.flickerFrequency = 1;
+    this.flickerPhase = 0;
+    this.currentOpacity = this.opacity * this.lifeAlpha;
   }
 
   display() {
@@ -99,17 +104,37 @@ class Circle {
     drawingContext.shadowColor =
       `rgba(${red(c)}, ${green(c)}, ${blue(c)}, ${this.haloBrightness})`;
     */
+    if (this.ifPlaying){
+      this.updateFlicker();
+    }
     
     //fill(this.red, this.green, this.blue, this.opacity);
     fill(
-    this.red,
-    this.green,
-    this.blue,
-    this.opacity * this.lifeAlpha
-);
+      this.red,
+      this.green,
+      this.blue,
+      this.currentOpacity
+    );
 
     circle(this.x, this.y, this.baseRadius * 2);
 
     pop();
+  }
+
+  updateFlicker(){
+    // Accumlate phase
+    // Avoiding sudden shift of phase due to the frequency change
+    this.flickerPhase += TWO_PI * this.flickerFrequency * (deltaTime / 1000);
+
+    // calculate flicker intensity
+    let flicker = (sin(this.flickerPhase) + 1) / 2;
+
+    // map intensity to opacity
+    // using opacity * lifeAlpha as the upper limit
+    this.currentOpacity = map(
+      flicker,
+      0, 1,
+      0.5 * this.opacity * this.lifeAlpha, this.opacity * this.lifeAlpha
+    );
   }
 }

@@ -7,6 +7,11 @@ class AudioAnalyzer{
         this.fft.setInput(this.song);
         this.amplitude = new p5.Amplitude();
         this.amplitude.setInput(this.song);
+
+        this.lowEnergy = 0;
+        this.highEnergy = 0;
+
+        this.peakDetect = new p5.PeakDetect(20, 140, 0.9, 30);
     }
 
     analyzeVolume(){
@@ -14,4 +19,15 @@ class AudioAnalyzer{
             return this.amplitude.getLevel();
         }
     }
+
+    analyzeFrequencyBand(){
+        this.fft.analyze();
+
+        this.lowEnergy = this.fft.getEnergy(20, 140);
+        this.highEnergy = this.fft.getEnergy(141, 14000);
+
+        this.peakDetect.update(this.fft);
+    }
+
+    
 }

@@ -74,7 +74,7 @@ this.sizeRules = [
     return newCircle;
   }
 
-  displayCircles(volume) {
+  displayCircles(volume, lowEnergy, highEnergy) {
     let haloBrightness = map(volume, 0, 0.3, 0.1, 1, true);
     for (let i = 0; i < this.circles.length; i++) {
       if (volume > 0){
@@ -84,6 +84,12 @@ this.sizeRules = [
         this.circles[i].ifPlaying = false;
       }
       this.circles[i].haloBrightness = haloBrightness;
+      if (this.circles[i].baseRadius >= 50 ){
+        this.circles[i].flickerFrequency = map(lowEnergy, 0, 255, 2.5, 0.2);
+      }
+      else{
+        this.circles[i].flickerFrequency = map(highEnergy, 0, 255, 0.5, 10);
+      }
       this.circles[i].display();
     }
   }
