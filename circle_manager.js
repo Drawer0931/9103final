@@ -84,6 +84,10 @@ this.sizeRules = [
         this.circles[i].ifPlaying = false;
       }
       this.circles[i].haloBrightness = haloBrightness;
+      
+      // Distinguishing between large and small circles
+      // Small circles use flicker frequency claculated from energy of high frequency band
+      // Large circles use flicker frequency claculated from energy of low frequency band
       if (this.circles[i].baseRadius >= 50 ){
         this.circles[i].flickerFrequency = map(lowEnergy, 0, 255, 2.5, 0.2);
       }
