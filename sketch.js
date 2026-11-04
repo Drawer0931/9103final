@@ -11,6 +11,14 @@ let uploadButton;
 const playbutton_correction_value = 10;
 let audioAnalyzer;
 
+const flickerEffectWidth = 100;
+const flickerSquareWidth = 200;
+
+// One flicker last for 0.25 second
+const whiteFlickerTime = 250;
+let showRect = false;
+let rectStartTime = 0;
+
 // When playing, continuously updating
 // When not playing, stop updating
 //let ifPlaying;
@@ -67,6 +75,7 @@ function setup() {
 
 // Ensure the audio file has finished uploading
 // Check the format is audio
+// Create audioAnalyzer
 async function handleFile(file){
   if (file.type === "audio"){
     if (song){
@@ -114,11 +123,34 @@ function draw() {
   finishInput();
   if (audioAnalyzer){
     //console.log("have audio");
+    // Get volume data
     volume = audioAnalyzer.analyzeVolume();
+
+    // Get energy data and update beat detector
     audioAnalyzer.analyzeFrequencyBand();
-    // console.log(audioAnalyzer.lowEnergy + "," + audioAnalyzer.highEnergy);
-    if (audioAnalyzer.peakDetect.isDetected) {
-      console.log("Beat detected!");
+    //console.log(audioAnalyzer.lowEnergy + "," + audioAnalyzer.highEnergy);
+
+    // Beat effect
+    // When beat detected, show effect
+    if (audioAnalyzer.peakDetect.isDetected){
+      showRect = true;
+      rectStartTime = millis();
+      //console.log("Beat detected!");
+    }
+    // Use 4 squares to create the flicker effect
+    if (showRect){
+      let timePassed = millis() - rectStartTime;
+      if (timePassed >= whiteFlickerTime){
+        showRect = false;
+      }
+      else{
+        // Fade-out effect
+        let flickerOpacity = map(timePassed, 0, whiteFlickerTime, 40, 0);
+        whiteSquareFlicker(-flickerEffectWidth, "leftRight", flickerOpacity);
+        whiteSquareFlicker(windowWidth - flickerEffectWidth, "leftRight", flickerOpacity);
+        whiteSquareFlicker(-flickerEffectWidth, "topBottom", flickerOpacity);
+        whiteSquareFlicker(windowHeight - flickerEffectWidth, "topBottom", flickerOpacity);
+      }
     }
     circleManager.displayCircles(volume, audioAnalyzer.lowEnergy, audioAnalyzer.highEnergy);
   }
@@ -139,4 +171,20 @@ function draw() {
   // End of AI used
   pop();
 
+}
+
+// Function to draw the squares for flicker effect
+function whiteSquareFlicker(x_or_y, direction, flickerOpacity){
+  push();
+  noStroke();
+  drawingContext.filter = "blur(50px)";
+  fill(255, 255, 255, flickerOpacity);
+  if(direction == "leftRight"){
+    rect(x_or_y, 0, flickerSquareWidth, windowHeight);
+  }
+  else if(direction == "topBottom"){
+    rect(0, x_or_y, windowWidth, flickerSquareWidth);
+  }
+  drawingContext.filter = "none";
+  pop();
 }

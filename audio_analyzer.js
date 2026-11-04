@@ -14,12 +14,14 @@ class AudioAnalyzer{
         this.peakDetect = new p5.PeakDetect(20, 140, 0.9, 30);
     }
 
+    // Get volumn data
     analyzeVolume(){
         if (this.ifPlaying){
             return this.amplitude.getLevel();
         }
     }
 
+    // Get energy data and beats
     analyzeFrequencyBand(){
         this.fft.analyze();
 
