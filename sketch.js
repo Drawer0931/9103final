@@ -25,3 +25,11 @@ updateInput(circleManager);
   // Draw the shared circles.
   circleManager.displayCircles();
 }
+
+function draw() {
+  background(16, 18, 27);
+  updateInput(circleManager);
+  updateNoise(circleManager);
+  circleManager.displayCircles();
+  finishInput();
+}
