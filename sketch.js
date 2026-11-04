@@ -112,8 +112,15 @@ function draw() {
   updateNoise(circleManager);
 
   drawCircleBackground(circleManager);
+  
+}
 
-  // Draw the shared circles.
+function draw() {
+  background(16, 18, 27);
+  updateInput(circleManager);
+  updateNoise(circleManager);
+  circleManager.displayCircles();
+  finishInput();
   if (audioAnalyzer){
     //console.log("have audio");
     // Get volume data
