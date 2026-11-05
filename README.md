@@ -30,3 +30,15 @@ groups replace real objects only at zero alpha, fixed counts, concurrency,
 and composition reset. Browser/audio/input visual review is still required
 before merging: watch 60 seconds, upload/play/pause audio, test Tab grab/push,
 M blend modes and R reset. Implementation assisted by ChatGPT/Codex.
+
+## Individual contribution — Zoey1777
+
+I am responsible for the Time-Based Mechanic. My development progressed from an initial time module, through a breathing-effect preview, to the integrated circle lifecycle.
+
+Development commits:
+
+1. [Create time-mechanic.js — e580ccc](https://github.com/Drawer0931/9103final/commit/e580ccc): Created the initial Time-Based Mechanic module.
+2. [Refine breathing strength and add standalone time preview — d023610](https://github.com/Drawer0931/9103final/commit/d023610): Refined the breathing effect and added a standalone preview for evaluation.
+3. [Integrate staggered circle lifecycle with existing mechanics — cc408cc](https://github.com/Drawer0931/9103final/commit/cc408cc): Integrated staggered fade-out, replacement Circle objects and smooth fade-in with the group's existing mechanics.
+
+The first two commits are preserved on `feature/time-mechanic-zoey` as development history. The final integrated implementation was merged into `main` through [PR #7](https://github.com/Drawer0931/9103final/pull/7).
