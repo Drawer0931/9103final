@@ -62,6 +62,13 @@ frequency band. The higher the energy, the slower the circles flicker. When a
 drumbeat is detected, there will be a white edge glow flash briefly at the edge 
 of the screen.
 
+__Contributions__
+
+audio_analyzer.js -- Creating p5.FFT(), p5.Amplitude() and p5.PeakDetect(), detecting energy, volume and drumbeats respectively.
+circle_manager.js -- Data handling for "volume, lowEnergy, highEnergy" in displayCircles() function.
+circle.js -- Drawing halos in the display() function. Implementing the flicker effect, which is the updateFlicker() function.
+sketch.js -- Creating the "file input" and 2 buttons in the setup() function. Creating handleFile() function which is used for check the file type, wait for the file uploads completely, and then create an audioAnalyzer. Creating the playPause() function which controls the playing of the audio. Calling analyzeVolume() and analyzeFrequencyBand() which extract the data and detect the drumbeat in the draw() function. Implementing the white edge glow afterwards. And finally calling the displayCircles(), which act as a starting point for further processing of volume and energy data and realising the visual effects of halo and circle flicker.
+
 __General flow of the code__
 
 p5.FFT(), p5.Amplitude() and p5.PeakDetect() is created in AudioAnalyzer class 
