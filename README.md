@@ -1,19 +1,49 @@
 # IDEA 9103 FINAL PROJECT
 
 ## Inspiration
-Several Circles (1926) is one of Kandinsky's signature works — a composition of circles varying in size and color, arranged with an almost cosmic sense of order. Kandinsky believed color and sound were deeply connected, describing his work as "visual music." That's exactly why we chose this piece: its geometric structure is simple enough to reconstruct in code, while its underlying idea — that visuals are music — naturally lends itself to an interactive, sound-driven piece.
+
+Our project is inspired by Wassily Kandinsky’s Several Circles (1926). Its contrasting circle sizes, layered overlaps and dark background suggest a floating, almost cosmic composition. These features shaped our use of a clear size hierarchy, translucent colours and overlapping circles. The simple geometric forms also provided an accessible starting point for recreating and extending the artwork in p5.js.
+
+Kandinsky’s interest in the relationship between colour and music inspired our audio-responsive approach. We translate changes in music into halo brightness, rhythmic flickering and screen-edge glows, bringing a sense of musical rhythm to the composition.
+
+We developed these ideas into a living, interactive artwork. Smooth drifting and gradual colour changes continually reshape the relationships between circles, while fading and regeneration allow the composition to evolve. Viewers can upload music, push or drag circles, and explore different visual effects and arrangements. These interactions invite viewers to participate in the artwork while retaining the original painting’s emphasis on colour, geometry and balance.
+
 ## Interaction instruction
+
+Open index.html using Live Server. The circles automatically drift, change colour, fade out and regenerate. These animations work without music.
+
+| Action | Result |
+| --- | --- |
+| Click **Upload Audio** | Select an audio file from your computer. |
+| Click **Play/Pause** | Play or pause the uploaded music. During playback, halos and flickering respond to the audio, while detected peaks trigger glows around the screen edges. |
+| Move the mouse near circles in **Push mode** | Push circles away from the cursor. The closer the cursor is to a circle’s edge, the stronger the push. This is the default mode. |
+| Press **Tab** | Switch between **Push mode** and **Grab mode**. |
+| Click and hold a circle in **Grab mode**, then move the mouse | Drag the selected circle. Release the mouse button to let go. Held circles are protected from fading out and being replaced. |
+| Press **M** | Cycle through **Normal → Difference → Grayscale → Invert** visual effects. |
+| Press **R** | Generate a new composition using a new random seed. Each size category retains its fixed circle count, and colours are selected from the shared palette. |
 
 ## Techniques
 
+Our project uses p5.js and p5.sound to create an interactive interpretation of Several Circles. Each mechanic has a separate script, while the shared Circle class stores individual properties and CircleManager manages the collection and visual rules. setup() creates the canvas and initial composition, and draw() coordinates the mechanics and renders the artwork.
+
+Perlin noise and randomness: random(), randomSeed() and noiseSeed() generate repeatable starting compositions with fixed quantities across six size categories and a shared colour palette. noise() and map() produce shared and individual drift, alongside gradual RGB changes within controlled ranges. Different speeds based on circle size create variation while preserving visual balance. Layered circles form a subtle background whose outward spread also changes with noise.
+
+Audio: createFileInput() and loadSound() allow viewers to upload music. p5.FFT, p5.Amplitude and p5.PeakDetect analyse frequency energy, volume and peaks. Volume controls the brightness of blurred halos, while low- and high-frequency energy control flickering in larger and smaller circles. sin() and deltaTime produce continuous opacity oscillations, and detected peaks trigger brief glows around the screen edges. These mappings translate musical changes into visual responses.
+
+Time-based animation: millis() drives a repeating 35-second cycle that adjusts noise animation speed. A lifecycle system uses smooth interpolation to fade circles out and introduce replacements. Size-based lifespans, staggered timings and limits on simultaneous transitions prevent too many circles disappearing together. Replacements retain their size category and base colour, maintaining the composition’s structure.
+
+User input: dist() and map() calculate mouse proximity and pushing strength. Dragging uses mouse offsets and updates base positions so interaction works alongside noise movement. Keyboard events switch interaction modes, generate new seeded compositions, and apply blendMode() or filter() effects. Held circles are protected from removal during interaction.
+
+Our key decisions were to share circle data across mechanics, preserve the size hierarchy and palette, and combine effects through separate properties. Lifecycle opacity also controls audio effects so halos fade with their circles. We reduced background layers and used pixelDensity(1) to lower rendering costs, with an FPS display to monitor performance.
+
 ## Mechanic ownership
 
-| Mechanic | Author | Main Script File |
-| --- | --- | --- |
-| Audio | Zihan Wo | audio_analyzer.js |
-| Time-based | Zoey Wo | time-mechanic.js |
-| Perlin noise & randomness | Bowen Wei | noise.js |
-| User input | Yiwen Zhang | input-mechanic.js |
+| Mechanic | Author | Branch | Main Script File |
+| --- | --- | --- | --- |
+| Audio | Zihan Wo | ziwo-audio | audio_analyzer.js |
+| Time-based | Zoey Wo | feature/time-mechanic-zoey | time-mechanic.js |
+| Perlin noise & randomness | Bowen Wei | Bowen-noise | noise.js |
+| User input | Yiwen Zhang | input-mechanic | input-mechanic.js |
 
 ## Audio
 
@@ -32,8 +62,28 @@ frequency band. The higher the energy, the slower the circles flicker. When a
 drumbeat is detected, there will be a white edge glow flash briefly at the edge 
 of the screen.
 
-## Time-based
+__General flow of the code__
 
+p5.FFT(), p5.Amplitude() and p5.PeakDetect() is created in AudioAnalyzer class 
+to detect energy, volume and drumbeats respectively. The functions that retrieve 
+these values will be called in sketch.js. White edge glow will be implemented 
+directly in sketch.js, because this is a screen effect and it has nothing to 
+do with circles. The white edge glow is achieved by drawing a semi-transparent 
+white rectangle with blurred edges along each of the screen’s four edges. Volume 
+and energy will be given to the displayCircles() function in CircleManager class. 
+CircleManager class contains a list storing every existing circle. And 
+displayCircles() will handle the values of ‘haloBrightness’ and ‘flickerFrequency’ 
+for each circle. Each circle will implement the halo and flicker effects 
+individually using the `display()` method in the `Circle` class. The Halo effect 
+is achieved by adding two concentric circles outside each circle, with gradually 
+increasing radii, lower transparency and blurred edges. The higher the volume, the 
+less transparent these two circles become, making the halo appear brighter.The 
+flickering effect is achieved by periodically altering the transparency of the 
+circle. The circle’s transparency is calculated by converting the frequency into 
+a period using a sine function, and then map to a number between maximum opacity 
+and half of the maximum opacity.
+
+## Time-based
 
 __Contributions__
 
@@ -77,10 +127,17 @@ __Development commits:__
 
 ## User Input
 
+Start here
+
 ## AI acknowledgment
+
+We used ChatGPT to refine the wording in README.md, check spelling and grammar, and improve clarity and accuracy while preserving our original meaning.
+
+We also used ChatGPT to review and optimise our code, helping identify and resolve conflicts and errors when integrating team members’ contributions. AI-generated code sections are marked with comments in the relevant files.
 
 ## External references
 
+- **Kandinsky artwork reference:** [Several Circles (1926)](https://www.guggenheim.org/artwork/1992), used as the visual reference for the circle size hierarchy, colour palette, overlapping forms and dark background.
 
 ## Time lifecycle integration
 
