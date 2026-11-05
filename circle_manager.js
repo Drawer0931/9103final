@@ -56,7 +56,12 @@ this.sizeRules = [
 
 
 
-  // AI used
+// This code was generated with the help of ChatGPT.
+// It calculates the replacement limit for each size category:
+// half its circle count, rounded down, with a minimum of one.
+// It also replaces a selected circle with a newly generated circle
+// of the same size category, keeping the total circle count unchanged.
+
   // Maximum number of circles changing in one size category.
   getMaxChanging(level) {
     let count = this.sizeRules[level].count;
@@ -73,6 +78,8 @@ this.sizeRules = [
 
     return newCircle;
   }
+
+  //-- End of AI used
 
   displayCircles(volume, lowEnergy, highEnergy) {
     let haloBrightness = map(volume, 0, 0.3, 0.1, 1, true);
