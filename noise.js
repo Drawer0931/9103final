@@ -97,6 +97,7 @@ function initialiseCircles(seed, manager) {
 
 // Update group movement, individual movement and colours.
 function updateNoise(manager) {
+  const timeSpeed = manager.timeNoiseMultiplier ?? 1;
   // Calculate the shared movement once per frame.
   let groupRange = 25 * canvasScale;
 
@@ -113,8 +114,8 @@ function updateNoise(manager) {
   );
 
   // Advance the shared noise sampling positions.
-  groupNoiseX = groupNoiseX + groupDriftSpeed;
-  groupNoiseY = groupNoiseY + groupDriftSpeed;
+  groupNoiseX = groupNoiseX + groupDriftSpeed * timeSpeed;
+  groupNoiseY = groupNoiseY + groupDriftSpeed * timeSpeed;
 
   for (let i = 0; i < manager.circles.length; i++) {
     let currentCircle = manager.circles[i];
@@ -143,10 +144,10 @@ function updateNoise(manager) {
 
     // Keep the three individual speed levels.
     currentCircle.noiseX =
-      currentCircle.noiseX + currentCircle.driftSpeed;
+      currentCircle.noiseX + currentCircle.driftSpeed * timeSpeed;
 
     currentCircle.noiseY =
-      currentCircle.noiseY + currentCircle.driftSpeed;
+      currentCircle.noiseY + currentCircle.driftSpeed * timeSpeed;
 
     // Colour
     let valueRed = noise(currentCircle.noiseRed);
@@ -185,13 +186,13 @@ function updateNoise(manager) {
 
     // Advance colour noise using this circle's own speed.
     currentCircle.noiseRed =
-      currentCircle.noiseRed + currentCircle.colourSpeed;
+      currentCircle.noiseRed + currentCircle.colourSpeed * timeSpeed;
 
     currentCircle.noiseGreen =
-      currentCircle.noiseGreen + currentCircle.colourSpeed;
+      currentCircle.noiseGreen + currentCircle.colourSpeed * timeSpeed;
 
     currentCircle.noiseBlue =
-      currentCircle.noiseBlue + currentCircle.colourSpeed;
+      currentCircle.noiseBlue + currentCircle.colourSpeed * timeSpeed;
   }
 }
 
@@ -292,7 +293,9 @@ function createReplacementCircle(oldCircle, sizeRule) {
     oldCircle.baseRed,
     oldCircle.baseGreen,
     oldCircle.baseBlue,
-    oldCircle.opacity
+    oldCircle.opacity,
+    oldCircle.haloBrightness,
+    oldCircle.haloSize
   );
 
   newCircle.sizeLevel = sizeRule.level;

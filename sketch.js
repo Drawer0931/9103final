@@ -104,23 +104,10 @@ function playPause(){
 
 function draw() {
   background(16, 18, 27);
-
-  // Handle mouse input first.
+  updateTimeMechanic(circleManager);
   updateInput(circleManager);
-
-  // Update circle movement and colours.
   updateNoise(circleManager);
-
   drawCircleBackground(circleManager);
-  
-}
-
-function draw() {
-  background(16, 18, 27);
-  updateInput(circleManager);
-  updateNoise(circleManager);
-  circleManager.displayCircles();
-  finishInput();
   if (audioAnalyzer){
     //console.log("have audio");
     // Get volume data
@@ -158,7 +145,7 @@ function draw() {
     //console.log("no audio");
     circleManager.displayCircles(0);
   }
-  // Draw the background around the circles.
+  finishInput();
 
   // AI used
   // Show the current frame rate.
