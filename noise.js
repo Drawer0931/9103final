@@ -23,6 +23,10 @@ function initialiseCircles(seed, manager) {
   // Each item contains a radius and its colour speed.
   let sizes = [];
 
+
+  //--This code was refined and generated with the help of ChatGPT
+  //  It builds a list of size rules, repeating each rule according to
+  //  its required circle count, ready for random selection later.
   for (let i = 0; i < manager.sizeRules.length; i++) {
     for (let j = 0; j < manager.sizeRules[i].count; j++) {
       sizes.push(manager.sizeRules[i]);
@@ -214,8 +218,10 @@ function drawCircleBackground(manager) {
   noStroke();
 
 
-  //--AI used
-  // Draw from the outermost layer toward the circles.
+  //--This code was generated with the help of ChatGPT
+  //  It draws background layers from the outside inward, adjusting their size and colour
+  //  to create an even inner area and softly fading edge.
+  //  Draw from the outermost layer toward the circles.
   for (let layer = layers; layer >= 0; layer--) {
     let padding = map(
       layer, 0, layers,
@@ -237,9 +243,11 @@ function drawCircleBackground(manager) {
       18 + 8 * strength,
       27 + 12 * strength
     );
-    // --AI used end
+    //--AI used end
 
-    // --AI used
+    //--This code was generated with the help of ChatGPT/
+    //  It draws the background around each circle at its cureent postion
+    //  and scales the background area using lifeAlpha.
     for (let i = 0; i < manager.circles.length; i++) {
       let c = manager.circles[i];
 
@@ -257,7 +265,7 @@ function drawCircleBackground(manager) {
       c.y,
       backgroundRadius * 2
       );
-    // --AI used end
+    //--AI used end
     }
   }
 
