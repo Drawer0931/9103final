@@ -4,7 +4,7 @@
 // "push" or "grab". Press Tab to switch.
 let currentMode = "push";
 
-// Push mode settings 
+// Push mode 
 let pushRange = 120;   // how close the mouse 
 let pushStrength = 6;  // the biggest distance circle moves per frame
 
@@ -13,6 +13,8 @@ let heldCircle = null;
 let grabOffsetX = 0;   
 let grabOffsetY = 0;
 
+
+// AI assistance: ChatGPT helped with the implementation of blend modes and colour filters.
 // Blend mode. normal, difference, black and white, invert
 let blendModeIndex = 0;
 
@@ -34,9 +36,9 @@ function finishInput() {
 
   // filter Source: https://p5js.org/reference/p5/filter/
   if (blendModeIndex === 2) {
-    filter(GRAY);   // black and white
+    filter(GRAY);   
   } else if (blendModeIndex === 3) {
-    filter(INVERT); // every colour becomes its opposite
+    filter(INVERT); 
   }
 }
 
@@ -51,7 +53,7 @@ function getCurrentRadius(circle) {
   return circle.baseRadius;
 }
 
-// Push mode
+// Push 
 function pushCircles(manager) {
   let range = pushRange * canvasScale;
   let maxStep = pushStrength * canvasScale;
@@ -59,15 +61,12 @@ function pushCircles(manager) {
   for (let i = 0; i < manager.circles.length; i++) {
     let currentCircle = manager.circles[i];
 
-    // the distance between two points.
-    // Source: https://p5js.org/reference/p5/dist/
     let distanceToCentre = dist(mouseX, mouseY, currentCircle.x, currentCircle.y);
 
     // Distance from the mouse to the circle 
     // Measure from the edge 
     let distanceToEdge = max(0, distanceToCentre - getCurrentRadius(currentCircle));
 
-    // push circles whose edge is inside the range 
     if (distanceToEdge < range && distanceToCentre > 0) {
       // Closer to the mouse = bigger step
       let step = map(distanceToEdge, 0, range, maxStep, 0);
@@ -84,12 +83,12 @@ function pushCircles(manager) {
   }
 }
 
-// Grab mode
+// Grab 
 function dragHeldCircle() {
   if (heldCircle === null) {
     return;
   }
-
+// AI assistance: ChatGPT helped with the drag offset calculation
   let targetX = mouseX + grabOffsetX;
   let targetY = mouseY + grabOffsetY;
 
@@ -109,7 +108,6 @@ function keepInsideCanvas(circle) {
   circle.baseY = max(margin, min(height - margin, circle.baseY));
 }
 
-// Mouse pressed
 function mousePressed() {
   if (currentMode !== "grab") {
     return;
@@ -129,7 +127,6 @@ function mousePressed() {
   }
 }
 
-// Mouse released
 function mouseReleased() {
   heldCircle = null;
 }
@@ -144,7 +141,7 @@ function keyPressed() {
     }
     heldCircle = null; 
 
-    // stop the browser's default Tab behaviour 
+    // stop 
     return false;
   }
 

@@ -165,7 +165,59 @@ __Development commits:__
 
 ## User Input
 
-Start here
+__Push and Grab Interaction Modes__
+
+Users can interact with the circles on the screen through two different modes: Push and Grab. Users can press the "Tab" key to switch between the two modes.
+
+In Push mode, circles will move away from the mouse when it gets close to them. The `pushCircles()` function calculates the distance between the mouse and each circle. It also measures the distance from the mouse to the edge of each circle, so that the pushing effect responds to how close the mouse is to the circle's boundary. The closer the mouse is, the stronger the pushing effect. The circles move away from the mouse according to the calculated direction and movement strength.
+
+In Grab mode, users can click directly on a circle and drag it to a new position. The `mousePressed()` function checks whether the mouse is inside a circle and selects the circle to be dragged. The `dragHeldCircle()` function updates its position as the mouse moves. An offset is used to maintain the relative position between the mouse and the circle when dragging, allowing users to grab the circle from different points without it suddenly jumping to the cursor.
+
+The `keepInsideCanvas()` function ensures that circles remain within the canvas boundaries during both interactions.
+
+__Contributions__
+
+input-mechanic.js -- Implementing the Push and Grab interaction modes, keyboard controls and visual effects.
+
+`pushCircles()` -- Calculating the distance between the mouse and each circle, determining the pushing direction and strength, and updating the circle's base position.
+
+`dragHeldCircle()` -- Handling the dragging behaviour by updating the selected circle's position based on the mouse position and drag offset.
+
+`mousePressed()` and `mouseReleased()` -- Detecting when a circle is selected and releasing it after dragging.
+
+`keepInsideCanvas()` -- Keeping circles within the canvas boundaries by limiting their base positions.
+
+`keyPressed()` -- Handling keyboard input. Pressing Tab switches between Push and Grab modes, M changes the visual blend mode, and R generates a new random composition.
+
+`updateInput()` and `finishInput()` -- Applying the selected blend mode and resetting the blend mode after the interaction update.
+
+__General flow of the code__
+
+The `updateInput()` function acts as the main entry point for the input mechanic. It checks the current interaction mode and calls the corresponding function. If the current mode is Push, it calls `pushCircles()` to calculate and update the movement of the circles. If the current mode is Grab, it calls `dragHeldCircle()` to update the position of the selected circle while dragging.
+
+In Push mode, the code loops through all circles stored in `CircleManager`. It calculates the distance between the mouse and each circle's centre, then subtracts the circle's radius to determine the distance from the mouse to the circle's edge. If the mouse is within the pushing range, the code uses `map()` to calculate the movement strength. The direction is calculated using the difference between the circle's position and the mouse position. The circle's base position is then updated according to this direction and strength.
+
+In Grab mode, `mousePressed()` checks the circles from the top of the drawing order to the bottom, so that the topmost circle is selected first when circles overlap. Once a circle is selected, the code records the offset between the mouse position and the circle's position. During dragging, `dragHeldCircle()` uses this offset to calculate the target position. It also accounts for the difference between the circle's current position and its base position, allowing the circle to follow the mouse while maintaining its existing movement behaviour.
+
+Both interaction modes use `keepInsideCanvas()` to prevent circles from moving beyond the canvas boundaries.
+
+The keyboard controls are handled by `keyPressed()`. Pressing Tab switches the interaction mode, while M cycles through the available blend modes. Pressing R generates a new random seed and calls `initialiseCircles()` to create a new composition.
+
+__Visual Effects__
+
+The visual effects are controlled by the `blendModeIndex` variable. Users can press M to cycle through the available visual modes. The `getBlendModes()` function provides the blend mode options, while `updateInput()` applies the selected blend mode using p5.js `blendMode()`.
+
+After the drawing process, `finishInput()` resets the blend mode to normal. If grayscale or invert is selected, it applies the corresponding p5.js filter using `filter(GRAY)` or `filter(INVERT)`.
+
+__Development commits:__
+
+1. [Push Mode – af26f70](https://github.com/Drawer0931/9103final/commit/af26f70b65be980003012d97d9303324f16ab699): Implemented the initial Push interaction, allowing circles to move away from the mouse cursor. Created the separate input mechanic file and integrated it into the main sketch.
+
+2. [Refined Push Interaction – b3102d7](https://github.com/Drawer0931/9103final/commit/b3102d79d068ea9aec1f745a2dd7ff2f95ff86f9): Tested and refined the Push mode by adjusting its parameters and improving the distance calculation. Changed the pushing range to measure from the edge of each circle, making the interaction more consistent across different circle sizes.
+
+3. [Additional Input Features – 04eb1fa](https://github.com/Drawer0931/9103final/commit/04eb1fa9d29d4930327430fb11626da5674644c4): Added the Grab interaction mode, allowing users to select and drag circles. Also introduced keyboard controls for switching interaction modes, changing visual effects, and generating a new random composition, along with blend modes and colour filters.
+
+4. [Merge Main Branch – 9a08cb1](https://github.com/Drawer0931/9103final/commit/9a08cb10c0209d7c34ec7b6af54d74b000abd2b6): Merged the latest main branch into the input-mechanic branch to integrate updates from other team members and keep the project code synchronised.
 
 ## AI acknowledgment
 
@@ -194,3 +246,9 @@ We also used ChatGPT to review and optimise our code, helping identify and resol
 
 - MDN Web Docs. (n.d.). [if...else](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else).
   Technical documentation for the conditional logic handling the four lifecycle states: `alive`, `fadingOut`, `invisible`, and `fadingIn`.
+
+- p5.js – blendMode(): https://p5js.org/reference/p5/blendMode/
+   Used as a reference for implementing different blend modes.
+
+- p5.js – filter(): https://p5js.org/reference/p5/filter/
+   Used as a reference for applying grayscale and invert colour filters.
