@@ -135,27 +135,6 @@ __Development commits:__
 
 The first two commits are preserved on `feature/time-mechanic-zoey` as development history. The final integrated implementation was merged into `main` through [PR #7](https://github.com/Drawer0931/9103final/pull/7).
 
-__Technical References:__
-
-- MDN Web Docs. (n.d.). [WeakMap](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap).
-  Technical documentation for the object-keyed collection used by `lifecycleClocks` to store timing data for each CircleManager.
-
-- Khronos Group. (n.d.). [smoothstep](https://github.com/KhronosGroup/OpenGL-Refpages/blob/main/gl4/smoothstep.xml).
-  Mathematical reference for the formula `t * t * (3 - 2 * t)`, used in `timeSmoothstep()` to smooth fade-in and fade-out transitions.
-
-- p5.js. (n.d.). [millis()](https://p5js.org/reference/p5/millis/).
-  Technical documentation for elapsed-time measurement, which supports `fadeDueAt`, `nextFadeAt`, and lifecycle scheduling.
-
-- MDN Web Docs. (n.d.). [Remainder (%)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder).
-  Technical documentation for the operator used in `seconds % 35` to create a repeating 35-second cycle.
-
-- MDN Web Docs. (n.d.). [Array.prototype.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter).
-  Technical documentation for counting circles in transition and checking the project's simultaneous-transition limits.
-
-- MDN Web Docs. (n.d.). [if...else](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else).
-  Technical documentation for the conditional logic handling the four lifecycle states: `alive`, `fadingOut`, `invisible`, and `fadingIn`.
-
-
 ## Perlin Noise & Randomness
 
 My mechanic introduces randomly generated compositions, smooth drifting, continuous colour transitions, and a soft, changing background. Shared movement gives the composition a unified flow, while each circle’s independent drift changes its position and overlaps with other circles, adding visual interest. Colours change smoothly within a limited range around each circle’s base colour, keeping the artwork varied while maintaining a consistent palette. Random seeds allow viewers to explore different compositions and reproduce a particular starting arrangement.
@@ -197,4 +176,21 @@ We also used ChatGPT to review and optimise our code, helping identify and resol
 ## External references
 
 - **Kandinsky artwork reference:** [Several Circles (1926)](https://www.guggenheim.org/artwork/1992), used as the visual reference for the circle size hierarchy, colour palette, overlapping forms and dark background.
- 
+
+- MDN Web Docs. (n.d.). [WeakMap](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap).
+  Technical documentation for the object-keyed collection used by `lifecycleClocks` to store timing data for each CircleManager.
+
+- Khronos Group. (n.d.). [smoothstep](https://github.com/KhronosGroup/OpenGL-Refpages/blob/main/gl4/smoothstep.xml).
+  Mathematical reference for the formula `t * t * (3 - 2 * t)`, used in `timeSmoothstep()` to smooth fade-in and fade-out transitions.
+
+- p5.js. (n.d.). [millis()](https://p5js.org/reference/p5/millis/).
+  Technical documentation for elapsed-time measurement, which supports `fadeDueAt`, `nextFadeAt`, and lifecycle scheduling.
+
+- MDN Web Docs. (n.d.). [Remainder (%)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder).
+  Technical documentation for the operator used in `seconds % 35` to create a repeating 35-second cycle.
+
+- MDN Web Docs. (n.d.). [Array.prototype.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter).
+  Technical documentation for counting circles in transition and checking the project's simultaneous-transition limits.
+
+- MDN Web Docs. (n.d.). [if...else](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else).
+  Technical documentation for the conditional logic handling the four lifecycle states: `alive`, `fadingOut`, `invisible`, and `fadingIn`.
