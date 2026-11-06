@@ -41,7 +41,7 @@ Our key decisions were to share circle data across mechanics, preserve the size 
 | Mechanic | Author | Branch | Main Script File |
 | --- | --- | --- | --- |
 | Audio | Zihan Wo | ziwo-audio | audio_analyzer.js |
-| Time-based | Zoey Wo | feature/time-mechanic-zoey | time-mechanic.js |
+| Time-based | Zoey Liu | feature/time-mechanic-zoey | time-mechanic.js |
 | Perlin noise & randomness | Bowen Wei | Bowen-noise | noise.js |
 | User input | Yiwen Zhang | input-mechanic | input-mechanic.js |
 
