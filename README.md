@@ -104,6 +104,13 @@ circle. The circle’s transparency is calculated by converting the frequency in
 a period using a sine function, and then map to a number between maximum opacity 
 and half of the maximum opacity.
 
+__Main Commits:__
+
+https://github.com/Drawer0931/9103final/commit/fa726589842deeb4445bf1827551820037246998
+https://github.com/Drawer0931/9103final/commit/72de627c7497458593b7c4ca055d67f7dbfbd4c3
+https://github.com/Drawer0931/9103final/commit/709f33157ef4f2db237a26874f07060b6bed0db2
+https://github.com/Drawer0931/9103final/commit/67a228ef0fa2e53fc3b116be0d351170b697861f
+
 ## Time-based
 
 __Contributions__
